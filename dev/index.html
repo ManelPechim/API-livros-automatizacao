@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Biblioteca de Livros</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+
+        h1, h2 {
+            text-align: center;
+        }
+
+        .form-container, .list-container {
+            margin: 20px auto;
+            width: 50%;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 8px;
+            margin: 10px 0;
+            box-sizing: border-box;
+        }
+
+        button {
+            background-color: #28a745;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+
+        button:hover {
+            background-color: #218838;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        li {
+            background-color: #f9f9f9;
+            padding: 10px;
+            margin: 5px 0;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Biblioteca de Livros</h1>
+
+    <div class="form-container">
+        <h2>Adicionar novo livro</h2>
+        <form id="form-livro">
+            <label for="titulo">Título:</label>
+            <input type="text" id="titulo" name="titulo" required>
+            <label for="autor">Autor:</label>
+            <input type="text" id="autor" name="autor" required>
+            <button type="submit">Adicionar</button>
+        </form>
+    </div>
+
+    <div class="list-container">
+        <h2>Lista de Livros</h2>
+        <ul id="lista-livros"></ul>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const formLivro = document.getElementById('form-livro');
+            const listaLivros = document.getElementById('lista-livros');
+
+            // Função para listar os livros
+            function listarLivros() {
+                fetch('/livros')
+                    .then(response => response.json())
+                    .then(data => {
+                        listaLivros.innerHTML = '';
+                        data.forEach(livro => {
+                            const li = document.createElement('li');
+                            li.textContent = `${livro.titulo} - ${livro.autor}`;
+                            listaLivros.appendChild(li);
+                        });
+                    });
+            }
+
+            // Função para adicionar um novo livro
+            formLivro.addEventListener('submit', function (e) {
+                e.preventDefault();
+                const titulo = document.getElementById('titulo').value;
+                const autor = document.getElementById('autor').value;
+
+                fetch('/livros', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ titulo, autor })
+                })
+                    .then(response => response.json())
+                    .then(() => {
+                        formLivro.reset();
+                        listarLivros();  // Atualiza a lista de livros após adicionar
+                    })
+                    .catch(error => console.error('Erro ao adicionar livro:', error));
+            });
+
+            // Carrega a lista de livros quando a página é carregada
+            listarLivros();
+        });
+    </script>
+</body>
+</html>

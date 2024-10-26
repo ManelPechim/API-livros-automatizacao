@@ -1,1 +1,13 @@
-python3: can't open file '/home/manelpechim/ProjetoDevOps/Devops-22.8999-9-Emanuel/deployTeste/prod/apiBooksClass.py': [Errno 2] No such file or directory
+ * Serving Flask app 'apiBooksClass'
+ * Debug mode: on
+[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.184.26:5000
+[33mPress CTRL+C to quit[0m
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger PIN: 514-583-344
+127.0.0.1 - - [25/Oct/2024 22:27:29] "GET / HTTP/1.1" 200 -
+127.0.0.1 - - [25/Oct/2024 22:27:29] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+127.0.0.1 - - [25/Oct/2024 22:27:29] "GET /livros HTTP/1.1" 200 -
